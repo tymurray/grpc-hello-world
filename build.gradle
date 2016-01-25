@@ -20,25 +20,21 @@ dependencies {
 
 sourceSets {
     main {
-        proto {
-            srcDir 'src/main/proto'
-        }
         java {
             // include selfwritten and generated code
-            srcDirs 'src/main/java', 'generated-sources/main/java'
+            srcDirs 'src/main/java', 'gen/main/java'
         }
     }
-    // remove the test configuration - at least in your example you dont have a special test proto file
 }
 
 protobuf {
     // Configure the protoc executable
     protoc {
         // Download from repositories
-        path = '/usr/local/bin/protoc'
+        artifact = 'com.google.protobuf:protoc:3.0.0-beta-1'
     }
 
-    generateProtoTasks.generatedFilesBaseDir = 'generated-sources'
+    generateProtoTasks.generatedFilesBaseDir = 'gen'
 
     generateProtoTasks {
         // all() returns the collection of all protoc tasks
