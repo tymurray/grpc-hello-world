@@ -1,0 +1,84 @@
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.3'
+  }
+}
+
+sourceSets {
+    main {
+        proto {
+            srcDir 'src/main/proto'
+        }
+        java {
+            // include selfwritten and generated code
+            srcDirs 'src/main/java', 'generated-sources/main/java'            
+        }
+    }
+    // remove the test configuration - at least in your example you dont have a special test proto file
+}
+
+protobuf {
+  protoc {
+    // The version of protoc must match protobuf-java. If you don't depend on
+    // protobuf-java directly, you will be transitively depending on the
+    // protobuf-java version that grpc depends on.
+    //artifact = "com.google.protobuf:protoc:3.0.0-beta-1"
+    path = '/usr/local/bin/protoc'
+  }
+
+  generateProtoTasks.generatedFilesBaseDir = 'generated-sources'
+
+  // generatedFilesBaseDir = "src"
+  generateProtoTasks {
+    all().each { task ->
+    }
+
+    all()*.plugins {
+      //grpc {}
+    }
+    
+    // (Java only) returns tasks for a sourceSet
+    ofSourceSet('main')
+  }
+}
+
+/*
+generateProtoTasks {
+        // all() returns the collection of all protoc tasks
+        all().each { task ->
+            // Here you can configure the task
+        }
+
+        // In addition to all(), you may get the task collection by various
+        // criteria:
+
+        // (Java only) returns tasks for a sourceSet
+        ofSourceSet('main')
+  }   
+*/
+
+/*
+protobuf {
+  protoc {
+    // The version of protoc must match protobuf-java. If you don't depend on
+    // protobuf-java directly, you will be transitively depending on the
+    // protobuf-java version that grpc depends on.
+    artifact = "com.google.protobuf:protoc:3.0.0-beta-1"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:0.9.0'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}*/
