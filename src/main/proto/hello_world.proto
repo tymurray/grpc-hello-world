@@ -36,10 +36,10 @@ option java_package = "io.grpc.examples.helloworld";
 option java_outer_classname = "HelloWorldProto";
 
 // The greeting service definition.
-// service Greeter {
+service Greeter {
   // Sends a greeting
-//  rpc SayHello (HelloRequest) returns (HelloResponse) {}
-// }
+  rpc SayHello (HelloRequest) returns (HelloResponse) {}
+}
 
 // The request message containing the user's name.
 message HelloRequest {

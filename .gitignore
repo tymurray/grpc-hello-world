@@ -1,3 +1,5 @@
 .gradle/
 build/
 gen/
+*.iml
+.idea/
